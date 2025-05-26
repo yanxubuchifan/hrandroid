@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         val input1: EditText = binding.editTextText
 //        按钮点击事件
         button11.setOnClickListener { view ->
-            println("第一次")
+            println("第一次git1")
 //            获取输入框内容
             println(input1.text)
             val allinfo = queryDatabaseByLike(input1.text.toString())
