@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         databaseHelper = DatabaseHelper(this)
 //        val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用
-        cleandatabase()
-        readJsonFile()
+//        cleandatabase()
+//        readJsonFile()
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
