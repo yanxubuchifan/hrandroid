@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         databaseHelper = DatabaseHelper(this)
-        val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用
-//        readJsonFile()
+//        val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用
+        cleandatabase()
+        readJsonFile()
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
@@ -40,7 +41,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+//清空数据库
+    private fun cleandatabase() {
+        println("清空数据库")
+    val db = databaseHelper.writableDatabase
+    db.delete(TABLE_NAME,null,null)
 
+    }
+
+//    读取json插入数据
     private fun readJsonFile() {
         var jsonArray: JSONArray? = null
         try {

@@ -15,5 +15,5 @@ git push -u origin master
 
 第二次：
 git add *
-git commit -m "first2 commit"
+git commit -m "first3 commit"
 git push -u origin master

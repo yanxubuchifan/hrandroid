@@ -1,3 +1,5 @@
+import org.gradle.internal.declarativedsl.parsing.main
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,8 @@ plugins {
 android {
     namespace = "com.cnpc.myapplication"
     compileSdk = 35
+
+
 
     defaultConfig {
         applicationId = "com.cnpc.myapplication"
@@ -36,6 +40,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
 
 dependencies {

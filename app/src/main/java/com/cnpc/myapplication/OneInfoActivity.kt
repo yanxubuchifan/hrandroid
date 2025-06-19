@@ -40,30 +40,19 @@ class OneInfoActivity : AppCompatActivity() {
         val sexTextView: TextView = findViewById(R.id.sex_text_view)
         sexTextView.text = "性别: ${personInfo.oneinfo_sex}"
 
-        // 展示照片
-//        val headpicImageView: ImageView = findViewById(R.id.headpic_image_view)
-//        println(personInfo.oneinfo_headpic)
-//        val drawableResId = resources.getIdentifier("金闯.png", "drawable", packageName)
-//        println(drawableResId)
-//        val drawable: Drawable? = resources.getDrawable(drawableResId, null)
-//        headpicImageView.setImageDrawable(drawable)
-
         // 展示图片
-//        val headpicImageView: ImageView = findViewById(R.id.headpic_image_view)
-//        // 修正资源名拼接
-//        val drawableResId = resources.getIdentifier(
-//            "headpic/金闯",
-//            "drawable",
-//            packageName
-//        )
-//        // 添加资源 ID 有效性判断
-//        if (drawableResId != 0) {
-//            val drawable: Drawable? = resources.getDrawable(drawableResId, null)
-//            headpicImageView.setImageDrawable(drawable)
-//        } else {
-//            // 可以在这里添加日志或者错误提示，比如资源未找到的处理
-//            println("未找到对应的图片资源")
-//        }
+        val headpicImageView: ImageView = findViewById(R.id.headpic_image_view)
+        // 修正资源名拼接
+        val drawableResId = resources.getIdentifier(personInfo.oneinfo_headpic,"drawable",packageName)
+        println(personInfo.oneinfo_headpic)
+        // 添加资源 ID 有效性判断
+        if (drawableResId != 0) {
+            val drawable: Drawable? = resources.getDrawable(drawableResId, null)
+            headpicImageView.setImageDrawable(drawable)
+        } else {
+            // 可以在这里添加日志或者错误提示，比如资源未找到的处理
+            println("未找到对应的图片资源")
+        }
 
     }
 }

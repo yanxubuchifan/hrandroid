@@ -7,34 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".OneInfoActivity">
 
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:text="闫旭的简历"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="1dp" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/headpic_image_view"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        android:contentDescription="头像"-->
-<!--        android:src="@mipmap/金闯"-->
 
-
-<!--        />-->
+    <ImageView
+        android:id="@+id/headpic_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/z_headpic"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="124dp" />
 
     <TextView
         android:id="@+id/name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginTop="16dp" />
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="43dp" />
 
     <TextView
         android:id="@+id/sex_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        tools:layout_editor_absoluteX="229dp"
+        tools:layout_editor_absoluteY="48dp" />
 
     <!-- 其他个人信息的 TextView -->
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
