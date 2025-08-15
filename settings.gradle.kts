@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
-//        maven { url 'https://maven.aliyun.com/repository/public' } // 如果在中国使用
+        // 修正语法：添加 = uri() 包裹 URL
+        maven { url = uri("https://maven.aliyun.com/repository/public") }
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -9,26 +10,20 @@ pluginManagement {
             }
         }
         mavenCentral()
-        maven{
-//            uri("https://maven.aliyun.com/repository/public")
-//            uri("https://maven.aliyun.com/repository/google")
-//            uri("https://jitpack.io")
-//            uri("https://repo1.maven.org/maven2/")
-//            uri("https://plugins.gradle.org/m2/")
-        }
         gradlePluginPortal()
-
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // 同步修正依赖解析仓库的 URL 语法
+//        maven { url = uri("https://maven.aliyun.com/repository/public") }
         google()
         mavenCentral()
-
+        maven { url = uri("https://jitpack.io") }
     }
 }
+//
 
 rootProject.name = "My Application"
 include(":app")
- 

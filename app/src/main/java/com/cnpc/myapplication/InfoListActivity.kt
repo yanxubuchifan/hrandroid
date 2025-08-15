@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import androidx.recyclerview.widget.DividerItemDecoration
 
 class InfoListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,18 +24,24 @@ class InfoListActivity : AppCompatActivity() {
         }
         println("我是信息列表页")
         // 获取传递过来的数据
+                // 获取传递过来的数据
         val infolist = intent.getStringExtra("infolist")
         val gson = Gson()
         val receivedList = gson.fromJson(infolist, Array<PersonInfo>::class.java).toMutableList()
         println(receivedList)
 
-        // 提取名字列表
-        val names = receivedList.map { it.oneinfo_name }
-
-        // 设置 RecyclerView
+        // 设置 RecyclerView（修复部分）
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = NameAdapter(names, receivedList)
+        // 仅传递personInfoList给适配器
+        val adapter = NameAdapter(receivedList)
         recyclerView.adapter = adapter
+        // 添加分隔线（如需保留）
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        // 替换dpToPx()为直接像素值（或实现DisplayUtils）
+        recyclerView.setPadding(48, 48, 48, 48) // 16dp ≈ 48px（按3倍密度屏估算）
+        recyclerView.clipToPadding = false
+
+
     }
 }

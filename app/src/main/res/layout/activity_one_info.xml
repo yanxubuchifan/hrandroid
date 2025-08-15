@@ -1,359 +1,670 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".OneInfoActivity">
+    android:background="@color/bg_page">
 
-
-
-    <!-- 头像 -->
-
-    <!-- 姓名 -->
-
-    <ImageView
-        android:id="@+id/headpic_image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="20dp"
-        android:background="@android:color/darker_gray"
-        android:clipToOutline="true"
-        android:outlineProvider="bounds"
-        android:scaleType="centerCrop"
-        android:src="@drawable/z_headpic"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="43dp" />
-
-    <TextView
-        android:id="@+id/name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/headpic_image_view"
-        android:layout_marginStart="16dp" />
-
-    <!-- 性别 -->
-    <TextView
-        android:id="@+id/sex_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/name_text_view"
-        app:layout_constraintStart_toEndOf="@id/headpic_image_view"
-        android:layout_marginStart="16dp" />
-
-    <!-- 分割线 -->
-    <View
-        android:id="@+id/divider1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/headpic_image_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <!-- 个人信息标题 -->
-    <TextView
-        android:id="@+id/personal_info_title"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="个人信息"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/divider1"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+        android:padding="24dp">
 
-    <!-- 生日 -->
-    <TextView
-        android:id="@+id/birthday_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/personal_info_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+        <!-- 顶部信息卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/top_info_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <!-- 国籍 -->
-    <TextView
-        android:id="@+id/nationality_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/birthday_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
 
-    <!-- 籍贯 -->
-    <TextView
-        android:id="@+id/nativeplace_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/nationality_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                <!-- 头像区域 -->
+                <ImageView
+                    android:id="@+id/headpic_image_view"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@drawable/avatar_placeholder"
+                    android:clipToOutline="true"
+                    android:outlineProvider="bounds"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/z_headpic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 出生地 -->
-    <TextView
-        android:id="@+id/birthplace_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/nativeplace_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
 
-    <!-- 入党时间 -->
-    <TextView
-        android:id="@+id/date_of_CPC_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/birthplace_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                <!-- 个人基本信息 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/headpic_image_view"
+                    app:layout_constraintTop_toTopOf="@id/headpic_image_view">
 
-    <!-- 参加工作时间 -->
-    <TextView
-        android:id="@+id/date_of_work_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/date_of_CPC_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:id="@+id/name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_title"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-    <!-- 健康状况 -->
-    <TextView
-        android:id="@+id/health_status_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/date_of_work_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:id="@+id/sex_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/text_content"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-    <!-- 技术职称 -->
-    <TextView
-        android:id="@+id/technical_position_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/health_status_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+        <!-- 个人信息卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/personal_info_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/top_info_card">
 
-    <!-- 人才类别 -->
-    <TextView
-        android:id="@+id/talent_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/technical_position_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-    <!-- 全日制学历 -->
-    <TextView
-        android:id="@+id/full_time_schooling_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/talent_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                <!-- 个人信息标题 -->
+                <TextView
+                    android:id="@+id/personal_info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="个人信息"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-    <!-- 全日制学校及专业 -->
-    <TextView
-        android:id="@+id/school_and_major_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/full_time_schooling_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                <!-- 信息内容区域 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:divider="@drawable/divider_line"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
 
-    <!-- 在职教育 -->
-    <TextView
-        android:id="@+id/inservice_education_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/school_and_major_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                    <!-- 生日 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-    <!-- 在职学校及专业 -->
-    <TextView
-        android:id="@+id/school_and_major2_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/inservice_education_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="生日"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
 
-    <!-- 分割线 -->
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/school_and_major2_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+                        <TextView
+                            android:id="@+id/birthday_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-    <!-- 职务信息标题 -->
-    <TextView
-        android:id="@+id/position_info_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="职务信息"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/divider2"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+                    <!-- 国籍 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-    <!-- 现任职务 -->
-    <TextView
-        android:id="@+id/current_position_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/position_info_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="国籍"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
 
-    <!-- 拟提职务 -->
-    <TextView
-        android:id="@+id/proposed_position_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/current_position_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:id="@+id/nationality_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!-- 籍贯 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-    <!-- 拟免职务 -->
-    <TextView
-        android:id="@+id/proposed_removal_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/proposed_position_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="籍贯"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
 
-    <!-- 分割线 -->
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/proposed_removal_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+                        <TextView
+                            android:id="@+id/nativeplace_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!-- 出生地 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-    <!-- 其他信息标题 -->
-    <TextView
-        android:id="@+id/other_info_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="其他信息"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/divider3"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="出生地"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
 
-    <!-- 工作经历 -->
-    <TextView
-        android:id="@+id/work_experience_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/other_info_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:id="@+id/birthplace_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-    <!-- 奖励情况 -->
-    <TextView
-        android:id="@+id/reward_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/work_experience_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                    <!-- 入党时间 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-    <!-- 年度考核情况 -->
-    <TextView
-        android:id="@+id/annual_assessment_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/reward_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="入党时间"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
 
-    <!-- 提免理由 -->
-    <TextView
-        android:id="@+id/reasons_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/annual_assessment_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                        <TextView
+                            android:id="@+id/date_of_CPC_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-    <!-- 家庭信息 -->
-    <TextView
-        android:id="@+id/family_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/reasons_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+                    <!-- 参加工作时间 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="参加工作时间"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/date_of_work_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    健康状况-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="健康状况"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/health_status_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    技术职称-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="技术职称"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/technical_position_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    人才类别-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="人才类别"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/talent_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    全日制学历-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="全日制学历"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/full_time_schooling_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    全日制学校及专业-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="全日制学校及专业"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/school_and_major_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    在职教育-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="在职教育"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/inservice_education_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    在职学校及专业-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="在职学校及专业"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/school_and_major2_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    现任职务-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="现任职务"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/current_position_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    拟提职务-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="拟提职务"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/proposed_position_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--                    拟免职务-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="拟免职务"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/proposed_removal_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- 其他信息项类似结构 -->
+                    <!-- ... 此处省略其他信息项 ... -->
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 职务信息卡片和其他信息卡片采用类似结构 -->
+        <!-- ... 此处省略其他卡片布局 ... -->
+        <!-- 其他信息卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/other_info_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/personal_info_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- 其他信息标题 -->
+                <TextView
+                    android:id="@+id/other_info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="其他信息"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- 信息内容区域 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:divider="@drawable/divider_line"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <!-- 工作经历 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="工作经历"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/work_experience_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- 奖励情况 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="奖励情况"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/reward_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- 年度考核情况 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="年度考核情况"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/annual_assessment_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- 提免理由 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="提免理由"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/reasons_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!-- 家庭信息 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingVertical="12dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="家庭信息"
+                            android:textColor="@color/text_hint"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/family_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/text_content"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

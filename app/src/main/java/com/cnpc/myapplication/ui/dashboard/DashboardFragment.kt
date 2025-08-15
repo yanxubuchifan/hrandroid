@@ -1,23 +1,22 @@
-// 在 DashboardFragment.kt 中修改代码
 package com.cnpc.myapplication.ui.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.cnpc.myapplication.DatabaseHelper
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.cnpc.myapplication.R
 import com.cnpc.myapplication.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
-
     private var _binding: FragmentDashboardBinding? = null
     private lateinit var databaseHelper: DatabaseHelper
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,40 +24,78 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         databaseHelper = DatabaseHelper(requireContext())
 
-        // 展示按性别分类的比例
-        val sexCountMap = databaseHelper.countBySex()
-        val totalSexCount = sexCountMap.values.sum()
-        var sexRatioText = "按性别分类比例：\n"
-        sexCountMap.forEach { (sex, count) ->
-            val ratio = (count.toFloat() / totalSexCount) * 100
-            sexRatioText += "$sex: %.2f%%\n".format(ratio)
-        }
-        val sexRatioTextView = TextView(requireContext())
-        sexRatioTextView.text = sexRatioText
-        binding.root.addView(sexRatioTextView)
-
-        // 展示按年龄分类的比例
-        val ageGroupCountMap = databaseHelper.countByAgeGroup()
-        val totalAgeGroupCount = ageGroupCountMap.values.sum()
-        var ageGroupRatioText = "按年龄分类比例：\n"
-        ageGroupCountMap.forEach { (ageGroup, count) ->
-            val ratio = (count.toFloat() / totalAgeGroupCount) * 100
-            ageGroupRatioText += "$ageGroup: %.2f%%\n".format(ratio)
-        }
-        val ageGroupRatioTextView = TextView(requireContext())
-        ageGroupRatioTextView.text = ageGroupRatioText
-        binding.root.addView(ageGroupRatioTextView)
+        // 从数据库获取并展示性别分布
+        initGenderChart()
+        // 从数据库获取并展示年龄分布
+//        initAgeChart()
 
         return root
     }
+
+    // 初始化性别分布饼图
+    private fun initGenderChart() {
+        val sexCountMap = databaseHelper.countBySex() // 从users表统计性别数据
+        val total = sexCountMap.values.sum()
+
+        if (total == 0) {
+            binding.genderChart.description.text = "暂无性别数据"
+            return
+        }
+
+        val entries = sexCountMap.map { (sex, count) ->
+            PieEntry((count.toFloat() / total) * 100, "$sex (${count}人)")
+        }.toMutableList()
+
+        val dataSet = PieDataSet(entries, "性别分布")
+        dataSet.colors = listOf(0xFF64B5F6.toInt(), 0xFFE91E63.toInt())
+
+        // 创建并配置数据（设置字体大小）
+        val data = PieData(dataSet)
+        data.setValueTextSize(12f)  // 已设置字体大小的data变量
+
+        binding.genderChart.apply {
+            // 直接使用上面创建的data变量，无需重新创建PieData
+            this.data = data  // 修复：使用已配置好的data实例
+            description.text = "性别比例统计"
+            isDrawHoleEnabled = true
+            holeRadius = 40f
+            setCenterText("性别占比")
+            invalidate()
+        }
+    }
+
+
+    // 初始化年龄分布饼图
+//    private fun initAgeChart() {
+//        val ageGroupCountMap = databaseHelper.countByAgeGroup() // 从users表统计年龄组数据
+//        val total = ageGroupCountMap.values.sum()
+//
+//        if (total == 0) {
+//            binding.ageChart.description.text = "暂无年龄数据"
+//            return
+//        }
+//
+//        val entries = ageGroupCountMap.map { (ageGroup, count) ->
+//            PieEntry((count.toFloat() / total) * 100, ageGroup)
+//        }.toMutableList()
+//
+//        val dataSet = PieDataSet(entries, "年龄分布")
+//        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
+//
+//        binding.ageChart.apply {
+//            data = PieData(dataSet)
+//            description.text = "年龄结构统计"
+//            isDrawHoleEnabled = true
+//            holeRadius = 40f
+//            setCenterText("年龄占比")
+//            invalidate()
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

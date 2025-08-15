@@ -14,8 +14,13 @@ import java.io.IOException
 import org.json.JSONArray
 import org.json.JSONException
 import android.content.ContentValues
-import android.widget.Toast
+//import android.widget.Toast
 import com.cnpc.myapplication.DatabaseHelper.Companion.TABLE_NAME
+import androidx.activity.enableEdgeToEdge
+// Add missing ViewCompat import
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -24,9 +29,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        // 启用边缘沉浸式布局
+        enableEdgeToEdge()
+        // 修复：初始化类级别的binding变量，而非创建局部变量
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 设置系统栏适配
+        ViewCompat.setOnApplyWindowInsetsListener(binding.container) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // 为底部导航栏预留空间
+            binding.navView.setPadding(0, 0, 0, systemBars.bottom)
+            // 修复：使用findViewById获取fragment容器视图
+            findViewById<View>(R.id.nav_host_fragment_activity_main).setPadding(0, systemBars.top, 0, 0)
+            insets
+        }
 
         databaseHelper = DatabaseHelper(this)
         val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用

@@ -4,8 +4,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "MyDatabase.db", null, 2) { // 提升数据库版本号
+import java.io.File
+import java.io.FileOutputStream
+class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDatabase.db", null, 2) { // 提升数据库版本号
 
     companion object {
         const val TABLE_NAME = "users"
@@ -81,34 +82,66 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "MyDatabase.d
         return result
     }
 
-    // 按年龄段统计人数，这里简单假设按 0 - 18, 19 - 60, 61+ 划分
-    fun countByAgeGroup(): Map<String, Int> {
-        val db = readableDatabase
-        val ageGroupMap = mutableMapOf<String, Int>()
-        ageGroupMap["0 - 18"] = 0
-        ageGroupMap["19 - 60"] = 0
-        ageGroupMap["61+"] = 0
 
-        val cursor = db.query(TABLE_NAME, arrayOf(COLUMN_BIRTHDAY), null, null, null, null, null)
-        if (cursor.moveToFirst()) {
-            do {
-                val birthday = cursor.getString(0)
-                // 这里简单模拟计算年龄，实际需要根据日期格式正确计算
-                val age = calculateAge(birthday)
-                when {
-                    age in 0..18 -> ageGroupMap["0 - 18"] = ageGroupMap["0 - 18"]!! + 1
-                    age in 19..60 -> ageGroupMap["19 - 60"] = ageGroupMap["19 - 60"]!! + 1
-                    age > 60 -> ageGroupMap["61+"] = ageGroupMap["61+"]!! + 1
-                }
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        return ageGroupMap
-    }
 
     // 简单模拟计算年龄的方法，实际需要根据日期格式正确计算
     private fun calculateAge(birthday: String): Int {
         // 这里简单返回一个固定值，实际需要实现日期计算逻辑
         return 30
+    }
+
+    init {
+        copyDatabaseIfNotExists()
+    }
+
+    private fun copyDatabaseIfNotExists() {
+        // 现在可以正常访问 context（已声明为成员属性）
+        val dbPath = context.getDatabasePath("MyDatabase.db").path
+        if (!File(dbPath).exists()) {
+            context.assets.open("MyDatabase.db").use { input ->
+                FileOutputStream(dbPath).use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+    }
+    // 按5岁一个阶段统计年龄分布（如：0-4岁、5-9岁...70岁以上）
+    fun countByAgeGroup(): Map<String, Int> {
+        // 定义5岁间隔的年龄分组（覆盖0-70+岁）
+        val ageGroups = listOf(
+            "0-4岁", "5-9岁", "10-14岁", "15-19岁",
+            "20-24岁", "25-29岁", "30-34岁", "35-39岁",
+            "40-44岁", "45-49岁", "50-54岁", "55-59岁",
+            "60-64岁", "65-69岁", "70岁以上"
+        )
+        val ageGroupMap = ageGroups.associateWith { 0 }.toMutableMap()
+
+        val db = readableDatabase
+        val cursor = db.query(TABLE_NAME, arrayOf(COLUMN_BIRTHDAY), null, null, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val birthday = cursor.getString(0)
+                val age = calculateAge(birthday)
+
+                // 根据年龄确定5岁分组
+                val group = when {
+                    age >= 70 -> "70岁以上"
+                    age < 0 -> "0-4岁"
+                    else -> {
+                        val lower = (age / 5) * 5
+                        val upper = lower + 4
+                        "${lower}-${upper}岁"
+                    }
+                }
+
+                // 【修复】累加对应分组的人数（之前缺失的核心统计逻辑）
+                ageGroupMap[group] = ageGroupMap[group]?.plus(1) ?: 1
+
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+
+        return ageGroupMap.filterValues { it > 0 }
     }
 }

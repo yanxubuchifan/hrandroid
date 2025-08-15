@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- 主色调 -->
+    <color name="primary">#2D5BFF</color>
+    <color name="primary_light">#E8F0FF</color>
+    <!-- 文本颜色 -->
+    <color name="text_title">#222222</color>
+    <color name="text_content">#666666</color>
+    <color name="text_hint">#999999</color>
+    <!-- 背景色 -->
+    <color name="bg_page">#F5F7FA</color>
+    <color name="bg_card">#FFFFFF</color>
+    <!-- 分割线 -->
+    <color name="divider">#EEEEEE</color>
+    <color name="table_header">#4285F4</color>
+    <color name="table_row_even">#F5F7FA</color>
+    <color name="table_row_odd">#FFFFFF</color>
 </resources>

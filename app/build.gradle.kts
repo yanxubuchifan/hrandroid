@@ -54,5 +54,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.gson)
-    implementation(libs.mpandroidchart) // 添加 MPAndroidChart 依赖
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+//    implementation(libs.mpandroidchart) // 添加 MPAndroidChart 依赖
 }

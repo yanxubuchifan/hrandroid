@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.gson.Gson
+import android.widget.TableLayout
+import android.widget.TableRow
 
 class OneInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,17 +24,13 @@ class OneInfoActivity : AppCompatActivity() {
             insets
         }
         println("我是个人页")
-        // 获取传递过来的数据
+        // 获取传递过来的数据（简化解析逻辑）
         val oneinfo = intent.getStringExtra("oneinfo")
         val gson = Gson()
-        val receivedList = gson.fromJson(oneinfo, Array<PersonInfo>::class.java).toMutableList()
-        println(receivedList)
-        println(receivedList[0])
-        println(receivedList[0].oneinfo_name)
+        // 直接解析单个对象，无需解析数组
+        val personInfo = gson.fromJson(oneinfo, PersonInfo::class.java)
 
-        val personInfo = receivedList[0]
-
-        // 展示姓名
+        // 展示姓名（其他信息展示代码保持不变）
         val nameTextView: TextView = findViewById(R.id.name_text_view)
         nameTextView.text = "姓名: ${personInfo.oneinfo_name}"
 
@@ -43,43 +41,78 @@ class OneInfoActivity : AppCompatActivity() {
         // 展示图片
         val headpicImageView: ImageView = findViewById(R.id.headpic_image_view)
         // 修正资源名拼接
-        val drawableResId = resources.getIdentifier(personInfo.oneinfo_headpic, "drawable", packageName)
-        println(personInfo.oneinfo_headpic)
+        val drawableResId =
+            resources.getIdentifier(personInfo.oneinfo_headpic, "mipmap", packageName)
+        println("头像资源名: ${personInfo.oneinfo_headpic}, 资源ID: $drawableResId")
         // 添加资源 ID 有效性判断
         if (drawableResId != 0) {
             val drawable: Drawable? = resources.getDrawable(drawableResId, null)
             headpicImageView.setImageDrawable(drawable)
         } else {
-            // 可以在这里添加日志或者错误提示，比如资源未找到的处理
-            println("未找到对应的图片资源")
+            // 资源未找到时显示默认头像（关键修复）
+            println("未找到对应的图片资源: ${personInfo.oneinfo_headpic}")
+            headpicImageView.setImageResource(R.drawable.avatar_placeholder) // 使用占位图作为默认头像
         }
 
         // 展示其他个人信息
-        findViewById<TextView>(R.id.birthday_text_view).text = "生日: ${personInfo.oneinfo_birthday}"
-        findViewById<TextView>(R.id.nationality_text_view).text = "国籍: ${personInfo.oneinfo_nationality}"
-        findViewById<TextView>(R.id.nativeplace_text_view).text = "籍贯: ${personInfo.oneinfo_nativeplace}"
-        findViewById<TextView>(R.id.birthplace_text_view).text = "出生地: ${personInfo.oneinfo_birthplace}"
-        findViewById<TextView>(R.id.date_of_CPC_text_view).text = "入党时间: ${personInfo.oneinfo_date_of_CPC}"
-        findViewById<TextView>(R.id.date_of_work_text_view).text = "参加工作时间: ${personInfo.oneinfo_date_of_work}"
-        findViewById<TextView>(R.id.health_status_text_view).text = "健康状况: ${personInfo.oneinfo_health_status}"
-        findViewById<TextView>(R.id.technical_position_text_view).text = "技术职称: ${personInfo.oneinfo_technical_position}"
-        findViewById<TextView>(R.id.talent_text_view).text = "人才类别: ${personInfo.oneinfo_talent}"
-        findViewById<TextView>(R.id.full_time_schooling_text_view).text = "全日制学历: ${personInfo.oneinfo_full_time_schooling}"
-        findViewById<TextView>(R.id.school_and_major_text_view).text = "全日制学校及专业: ${personInfo.oneinfo_School_and_Major}"
-        findViewById<TextView>(R.id.inservice_education_text_view).text = "在职教育: ${personInfo.oneinfo_inservice_education}"
-        findViewById<TextView>(R.id.school_and_major2_text_view).text = "在职学校及专业: ${personInfo.oneinfo_School_and_Major2}"
-        findViewById<TextView>(R.id.current_position_text_view).text = "现任职务: ${personInfo.oneinfo_current_position}"
-        findViewById<TextView>(R.id.proposed_position_text_view).text = "拟提职务: ${personInfo.oneinfo_proposed_position}"
-        findViewById<TextView>(R.id.proposed_removal_text_view).text = "拟免职务: ${personInfo.oneinfo_proposed_removal}"
-        findViewById<TextView>(R.id.work_experience_text_view).text = "工作经历: ${personInfo.oneinfo_work_experience}"
-        findViewById<TextView>(R.id.reward_text_view).text = "奖励情况: ${personInfo.oneinfo_reward}"
-        findViewById<TextView>(R.id.annual_assessment_text_view).text = "年度考核情况: ${personInfo.oneinfo_annual_assessment}"
-        findViewById<TextView>(R.id.reasons_text_view).text = "提免理由: ${personInfo.oneinfo_reasons}"
+        // 生日信息
+        findViewById<TextView>(R.id.birthday_text_view).text = personInfo.oneinfo_birthday
+        // 国籍信息
+        findViewById<TextView>(R.id.nationality_text_view).text = personInfo.oneinfo_nationality
+        // 籍贯信息
+        findViewById<TextView>(R.id.nativeplace_text_view).text = personInfo.oneinfo_nativeplace
+        // 出生地信息
+        findViewById<TextView>(R.id.birthplace_text_view).text = personInfo.oneinfo_birthplace
+        // 入党时间信息
+        findViewById<TextView>(R.id.date_of_CPC_text_view).text = personInfo.oneinfo_date_of_CPC
+        // 参加工作时间
+        findViewById<TextView>(R.id.date_of_work_text_view).text = personInfo.oneinfo_date_of_work
+        // 健康状况
+        findViewById<TextView>(R.id.health_status_text_view).text = personInfo.oneinfo_health_status
+        // 技术职称
+        findViewById<TextView>(R.id.technical_position_text_view).text =
+            personInfo.oneinfo_technical_position
+        // 人才类别
+        findViewById<TextView>(R.id.talent_text_view).text = personInfo.oneinfo_talent
+        // 全日制学历
+        findViewById<TextView>(R.id.full_time_schooling_text_view).text =
+            personInfo.oneinfo_full_time_schooling
+        // 全日制学校及专业
+        findViewById<TextView>(R.id.school_and_major_text_view).text =
+            personInfo.oneinfo_School_and_Major
+        // 在职教育
+        findViewById<TextView>(R.id.inservice_education_text_view).text =
+            personInfo.oneinfo_inservice_education
+        // 在职学校及专业
+        findViewById<TextView>(R.id.school_and_major2_text_view).text =
+            personInfo.oneinfo_School_and_Major2
+        // 现任职务
+        findViewById<TextView>(R.id.current_position_text_view).text =
+            personInfo.oneinfo_current_position
+        // 拟提职务
+        findViewById<TextView>(R.id.proposed_position_text_view).text =
+            personInfo.oneinfo_proposed_position
+        // 拟免职务
+        findViewById<TextView>(R.id.proposed_removal_text_view).text =
+            personInfo.oneinfo_proposed_removal
+        // 工作经历
+        findViewById<TextView>(R.id.work_experience_text_view).text =
+            personInfo.oneinfo_work_experience
+        // 奖励情况
+        findViewById<TextView>(R.id.reward_text_view).text = personInfo.oneinfo_reward
+        // 年度考核情况
+        findViewById<TextView>(R.id.annual_assessment_text_view).text =
+            personInfo.oneinfo_annual_assessment
+        // 提免理由
+        findViewById<TextView>(R.id.reasons_text_view).text = personInfo.oneinfo_reasons
 
         // 展示家庭信息
         val familyText = personInfo.oneinfo_family.joinToString("\n") {
             "关系: ${it.oneinfo_family_mamber_relationship}, 姓名: ${it.oneinfo_family_mamber_name}, 生日: ${it.oneinfo_family_mamber_birthday}, 政治面貌: ${it.oneinfo_family_mamber_political}, 职务: ${it.oneinfo_family_mamber_position}"
         }
-        findViewById<TextView>(R.id.family_text_view).text = "家庭信息:\n$familyText"
-    }
-}
+        // 展示家庭信息
+        findViewById<TextView>(R.id.family_text_view).text = familyText
+
+
+         }
+        }
