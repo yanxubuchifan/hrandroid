@@ -1,7 +1,10 @@
 package com.cnpc.myapplication
 
+import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +27,7 @@ class OneInfoActivity : AppCompatActivity() {
             insets
         }
         println("我是个人页")
+
         // 获取传递过来的数据（简化解析逻辑）
         val oneinfo = intent.getStringExtra("oneinfo")
         val gson = Gson()
@@ -113,6 +117,16 @@ class OneInfoActivity : AppCompatActivity() {
         // 展示家庭信息
         findViewById<TextView>(R.id.family_text_view).text = familyText
 
-
          }
+    // 【修复】将点击方法移至 onCreate 外部，作为 Activity 的成员方法
+    fun onHeadpicClick(view: View) {
+        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_large_image)
+            val largeImageView = findViewById<ImageView>(R.id.large_image_view)
+            largeImageView.setImageDrawable((view as ImageView).drawable)
+            largeImageView.setOnClickListener { dismiss() }
+        }
+        dialog.show()
+    }
         }

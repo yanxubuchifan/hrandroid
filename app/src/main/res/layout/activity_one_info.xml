@@ -40,6 +40,9 @@
                     android:outlineProvider="bounds"
                     android:scaleType="centerCrop"
                     android:src="@drawable/z_headpic"
+                    android:clickable="true"
+                android:onClick="onHeadpicClick"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
