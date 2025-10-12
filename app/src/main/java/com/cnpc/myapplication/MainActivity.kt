@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         val values = ContentValues()
         try {
             values.put(DatabaseHelper.COLUMN_NAME, jsonObject.getString("oneinfo_name"))
+            
             values.put(DatabaseHelper.COLUMN_SEX, jsonObject.getString("oneinfo_sex"))
             values.put(DatabaseHelper.COLUMN_BIRTHDAY, jsonObject.getString("oneinfo_birthday"))
             // 获取生日字符串并计算年龄
