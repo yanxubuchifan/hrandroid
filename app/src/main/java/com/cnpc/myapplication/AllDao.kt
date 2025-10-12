@@ -7,6 +7,7 @@ data class PersonInfo(
     val oneinfo_name: String,
     val oneinfo_sex: String,
     val oneinfo_birthday: String,
+    val oneinfo_age: String,
     val oneinfo_headpic: String,
     val oneinfo_nationality: String,
     val oneinfo_nativeplace: String,

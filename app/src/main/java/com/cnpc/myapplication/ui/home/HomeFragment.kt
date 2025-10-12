@@ -84,6 +84,7 @@ class HomeFragment : Fragment() {
                 val oneinfo_name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME))
                 val oneinfo_sex = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_SEX))
                 val oneinfo_birthday = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BIRTHDAY))
+                val oneinfo_age = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_AGE))
                 val oneinfo_headpic = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_HEADPIC))
                 val oneinfo_nationality = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NATIONALITY))
                 val oneinfo_nativeplace = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NATIVEPLACE))
@@ -114,6 +115,7 @@ class HomeFragment : Fragment() {
                     oneinfo_name,
                     oneinfo_sex,
                     oneinfo_birthday,
+                    oneinfo_age,
                     oneinfo_headpic,
                     oneinfo_nationality,
                     oneinfo_nativeplace,
