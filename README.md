@@ -8,12 +8,12 @@ email=1206849098@qq.com
 name=yanxubuchifan
 
 git add *
-git commit -m "first commit"
+git commit -m "date1012"
 git remote add origin https://github.com/yanxubuchifan/hrandroid.git
 git push -u origin master
 
 
 第二次：
 git add *
-git commit -m "first2 commit"
+git commit -m "date1012"
 git push -u origin master

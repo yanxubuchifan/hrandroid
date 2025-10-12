@@ -14,6 +14,7 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
         const val COLUMN_NAME = "oneinfo_name"
         const val COLUMN_SEX = "oneinfo_sex"
         const val COLUMN_BIRTHDAY = "oneinfo_birthday"
+        const val COLUMN_AGE = "oneinfo_age"
         const val COLUMN_HEADPIC = "oneinfo_headpic"
         const val COLUMN_NATIONALITY = "oneinfo_nationality"
         const val COLUMN_NATIVEPLACE = "oneinfo_nativeplace"
@@ -42,7 +43,7 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
         android.util.Log.d("DatabaseHelper", "onCreate method called, creating table $TABLE_NAME")
         db.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_NAME TEXT, $COLUMN_SEX TEXT, $COLUMN_BIRTHDAY TEXT, $COLUMN_HEADPIC TEXT, " +
-                "$COLUMN_NATIONALITY TEXT, $COLUMN_NATIVEPLACE TEXT, $COLUMN_BIRTHPLACE TEXT, " +
+                "$COLUMN_NATIONALITY TEXT, $COLUMN_NATIVEPLACE TEXT, $COLUMN_BIRTHPLACE TEXT, $COLUMN_AGE TEXT, " +
                 "$COLUMN_DATE_OF_CPC TEXT, $COLUMN_DATE_OF_WORK TEXT, $COLUMN_HEALTH_STATUS TEXT, " +
                 "$COLUMN_TECHNICAL_POSITION TEXT, $COLUMN_TALENT TEXT, $COLUMN_FULL_TIME_SCHOOLING TEXT, " +
                 "$COLUMN_SCHOOL_AND_MAJOR TEXT, $COLUMN_INSERVICE_EDUCATION TEXT, $COLUMN_SCHOOL_AND_MAJOR2 TEXT, " +
@@ -96,13 +97,17 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     private fun copyDatabaseIfNotExists() {
         // 现在可以正常访问 context（已声明为成员属性）
-        val dbPath = context.getDatabasePath("MyDatabase.db").path
-        if (!File(dbPath).exists()) {
-            context.assets.open("MyDatabase.db").use { input ->
-                FileOutputStream(dbPath).use { output ->
-                    input.copyTo(output)
-                }
-            }
+//        val dbPath = context.getDatabasePath("MyDatabase.db").path
+//        if (!File(dbPath).exists()) {
+//            context.assets.open("MyDatabase.db").use { input ->
+//                FileOutputStream(dbPath).use { output ->
+//                    input.copyTo(output)
+//                }
+//            }
+//        }
+        val dbFile = context.getDatabasePath("MyDatabase.db")
+        if (!dbFile.parentFile.exists()) {
+            dbFile.parentFile.mkdirs() // 确保父目录存在
         }
     }
     // 按5岁一个阶段统计年龄分布（如：0-4岁、5-9岁...70岁以上）

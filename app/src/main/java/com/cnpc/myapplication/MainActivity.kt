@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 println(oneinfo)
                 insertData(oneinfo)
             }
+            println("插入完整数据")
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: JSONException) {
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
             values.put(DatabaseHelper.COLUMN_NAME, jsonObject.getString("oneinfo_name"))
             values.put(DatabaseHelper.COLUMN_SEX, jsonObject.getString("oneinfo_sex"))
             values.put(DatabaseHelper.COLUMN_BIRTHDAY, jsonObject.getString("oneinfo_birthday"))
+            values.put(DatabaseHelper.COLUMN_AGE, jsonObject.getString("oneinfo_age"))
             values.put(DatabaseHelper.COLUMN_HEADPIC, jsonObject.getString("oneinfo_headpic"))
             values.put(DatabaseHelper.COLUMN_NATIONALITY, jsonObject.getString("oneinfo_nationality"))
             values.put(DatabaseHelper.COLUMN_NATIVEPLACE, jsonObject.getString("oneinfo_nativeplace"))
