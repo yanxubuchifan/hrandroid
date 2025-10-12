@@ -21,6 +21,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.view.View
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -102,7 +105,11 @@ class MainActivity : AppCompatActivity() {
             values.put(DatabaseHelper.COLUMN_NAME, jsonObject.getString("oneinfo_name"))
             values.put(DatabaseHelper.COLUMN_SEX, jsonObject.getString("oneinfo_sex"))
             values.put(DatabaseHelper.COLUMN_BIRTHDAY, jsonObject.getString("oneinfo_birthday"))
-            values.put(DatabaseHelper.COLUMN_AGE, jsonObject.getString("oneinfo_age"))
+            // 获取生日字符串并计算年龄
+            val birthday = jsonObject.getString("oneinfo_birthday")
+            val age = calculateAge(birthday) // 调用年龄计算方法
+//            values.put(DatabaseHelper.COLUMN_BIRTHDAY, birthday) // 存入生日
+            values.put(DatabaseHelper.COLUMN_AGE, age.toString()) // 存入计算后的年龄
             values.put(DatabaseHelper.COLUMN_HEADPIC, jsonObject.getString("oneinfo_headpic"))
             values.put(DatabaseHelper.COLUMN_NATIONALITY, jsonObject.getString("oneinfo_nationality"))
             values.put(DatabaseHelper.COLUMN_NATIVEPLACE, jsonObject.getString("oneinfo_nativeplace"))
@@ -139,4 +146,33 @@ class MainActivity : AppCompatActivity() {
             // db.close()
         }
     }
+
+    // 计算年龄的工具方法（支持 yyyy-MM-dd 格式的生日）
+    private fun calculateAge(birthdayStr: String): Int {
+        return try {
+            val sdf = SimpleDateFormat("yyyy.MM", Locale.getDefault())
+            val birthday = sdf.parse(birthdayStr) ?: return 0 // 解析失败返回0
+            val calendar = Calendar.getInstance()
+            val currentYear = calendar.get(Calendar.YEAR)
+            val currentMonth = calendar.get(Calendar.MONTH) + 1 // 月份从0开始，+1转为实际月份
+            val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+            calendar.time = birthday
+            val birthYear = calendar.get(Calendar.YEAR)
+            val birthMonth = calendar.get(Calendar.MONTH) + 1
+            val birthDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+            // 计算年龄
+            var age = currentYear - birthYear
+            // 如果当前月份小于出生月份，或者月份相同但日期小于出生日期，年龄减1
+            if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
+                age--
+            }
+            age.coerceAtLeast(0) // 确保年龄不为负数
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0 // 解析失败返回0
+        }
+    }
+
 }
