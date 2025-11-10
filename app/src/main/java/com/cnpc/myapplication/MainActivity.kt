@@ -30,7 +30,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("开始应用")
         super.onCreate(savedInstanceState)
         // 启用边缘沉浸式布局
         enableEdgeToEdge()
@@ -47,8 +51,16 @@ class MainActivity : AppCompatActivity() {
             findViewById<View>(R.id.nav_host_fragment_activity_main).setPadding(0, systemBars.top, 0, 0)
             insets
         }
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("调用数据库")
 
         databaseHelper = DatabaseHelper(this)
+        println("***********************************aa")
+        databaseHelper.getReadableDatabase()
+        println("***********************************bb")
         val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用
         cleandatabase()
         readJsonFile()
@@ -67,7 +79,10 @@ class MainActivity : AppCompatActivity() {
     private fun cleandatabase() {
         println("清空数据库")
     val db = databaseHelper.writableDatabase
-    db.delete(TABLE_NAME,null,null)
+
+
+//    db.delete(TABLE_NAME,null,null)
+//    db.execSQL("DROP TABLE IF EXISTS ${DatabaseHelper.TABLE_NAME}")
 
     }
 
@@ -99,11 +114,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insertData(jsonObject: org.json.JSONObject) {
+        println("***********************************1")
+        println("***********************************2")
+        println("***********************************3")
+        println("***********************************4")
+        println("插入数据")
         val db = databaseHelper.writableDatabase
         val values = ContentValues()
         try {
             values.put(DatabaseHelper.COLUMN_NAME, jsonObject.getString("oneinfo_name"))
-            
+
             values.put(DatabaseHelper.COLUMN_SEX, jsonObject.getString("oneinfo_sex"))
             values.put(DatabaseHelper.COLUMN_BIRTHDAY, jsonObject.getString("oneinfo_birthday"))
             // 获取生日字符串并计算年龄

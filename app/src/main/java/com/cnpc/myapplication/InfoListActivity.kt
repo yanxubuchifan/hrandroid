@@ -28,7 +28,7 @@ class InfoListActivity : AppCompatActivity() {
         val infolist = intent.getStringExtra("infolist")
         val gson = Gson()
         val receivedList = gson.fromJson(infolist, Array<PersonInfo>::class.java).toMutableList()
-        println(receivedList)
+//        println(receivedList)
 
         // 设置 RecyclerView（修复部分）
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)

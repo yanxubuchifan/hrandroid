@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.io.File
 import java.io.FileOutputStream
-class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDatabase.db", null, 2) { // 提升数据库版本号
+class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDatabase2.db", null, 2) { // 提升数据库版本号
 
     companion object {
-        const val TABLE_NAME = "users"
+        const val TABLE_NAME = "users2"
         const val COLUMN_ID = "id"
         const val COLUMN_NAME = "oneinfo_name"
         const val COLUMN_SEX = "oneinfo_sex"
@@ -40,10 +40,15 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     override fun onCreate(db: SQLiteDatabase) {
         // 添加日志语句
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("新建数据库")
         android.util.Log.d("DatabaseHelper", "onCreate method called, creating table $TABLE_NAME")
         db.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_NAME TEXT, $COLUMN_SEX TEXT, $COLUMN_BIRTHDAY TEXT, $COLUMN_AGE TEXT, $COLUMN_HEADPIC TEXT, " +
-                "$COLUMN_NATIONALITY TEXT, $COLUMN_NATIVEPLACE TEXT, $COLUMN_BIRTHPLACE TEXT, $COLUMN_AGE TEXT, " +
+                "$COLUMN_NATIONALITY TEXT, $COLUMN_NATIVEPLACE TEXT, $COLUMN_BIRTHPLACE TEXT, " +
                 "$COLUMN_DATE_OF_CPC TEXT, $COLUMN_DATE_OF_WORK TEXT, $COLUMN_HEALTH_STATUS TEXT, " +
                 "$COLUMN_TECHNICAL_POSITION TEXT, $COLUMN_TALENT TEXT, $COLUMN_FULL_TIME_SCHOOLING TEXT, " +
                 "$COLUMN_SCHOOL_AND_MAJOR TEXT, $COLUMN_INSERVICE_EDUCATION TEXT, $COLUMN_SCHOOL_AND_MAJOR2 TEXT, " +
@@ -54,6 +59,11 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // 添加日志语句
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("升级数据库")
         android.util.Log.d("DatabaseHelper", "onUpgrade method called, dropping and recreating table $TABLE_NAME")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
@@ -61,6 +71,11 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     // 模糊查询用户信息的方法
     fun queryUserInfoByLike(name: String): Cursor? {
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("模糊查询用户信息的方法")
         val db = readableDatabase
         val selection = "$COLUMN_NAME LIKE?"
         val selectionArgs = arrayOf("%$name%")
@@ -69,6 +84,11 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     // 按性别统计人数
     fun countBySex(): Map<String, Int> {
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("***********************************")
+        println("按性别统计人数")
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT $COLUMN_SEX, COUNT(*) FROM $TABLE_NAME GROUP BY $COLUMN_SEX", null)
         val result = mutableMapOf<String, Int>()
@@ -105,7 +125,7 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 //                }
 //            }
 //        }
-        val dbFile = context.getDatabasePath("MyDatabase.db")
+        val dbFile = context.getDatabasePath("MyDatabase2.db")
         if (!dbFile.parentFile.exists()) {
             dbFile.parentFile.mkdirs() // 确保父目录存在
         }
