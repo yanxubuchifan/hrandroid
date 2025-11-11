@@ -1,6 +1,7 @@
 package com.cnpc.myapplication
 
 import android.app.Dialog
+import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.gson.Gson
 import android.widget.TableLayout
 import android.widget.TableRow
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class OneInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,11 +98,11 @@ class OneInfoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.current_position_text_view).text =
             personInfo.oneinfo_current_position
         // 拟提职务
-        findViewById<TextView>(R.id.proposed_position_text_view).text =
-            personInfo.oneinfo_proposed_position
-        // 拟免职务
-        findViewById<TextView>(R.id.proposed_removal_text_view).text =
-            personInfo.oneinfo_proposed_removal
+//        findViewById<TextView>(R.id.proposed_position_text_view).text =
+//            personInfo.oneinfo_proposed_position
+//        // 拟免职务
+//        findViewById<TextView>(R.id.proposed_removal_text_view).text =
+//            personInfo.oneinfo_proposed_removal
         // 工作经历
         findViewById<TextView>(R.id.work_experience_text_view).text =
             personInfo.oneinfo_work_experience
@@ -115,7 +119,31 @@ class OneInfoActivity : AppCompatActivity() {
             "关系: ${it.oneinfo_family_mamber_relationship}, 姓名: ${it.oneinfo_family_mamber_name}, 生日: ${it.oneinfo_family_mamber_birthday}, 政治面貌: ${it.oneinfo_family_mamber_political}, 职务: ${it.oneinfo_family_mamber_position}"
         }
         // 展示家庭信息
-        findViewById<TextView>(R.id.family_text_view).text = familyText
+//        findViewById<TextView>(R.id.family_text_view).text = familyText
+
+
+        // 替换原有的家庭信息展示代码
+        val familyRecyclerView: RecyclerView = findViewById(R.id.family_recycler_view)
+// 使用垂直布局管理器，让每个条目纵向排列
+        familyRecyclerView.layoutManager = LinearLayoutManager(this)
+// 设置适配器
+        familyRecyclerView.adapter = FamilyAdapter(personInfo.oneinfo_family)
+// 添加分割线
+        familyRecyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                val divider = ContextCompat.getDrawable(this@OneInfoActivity, R.drawable.divider_line)
+                divider?.let {
+                    for (i in 0 until parent.childCount) {
+                        val child = parent.getChildAt(i)
+                        val params = child.layoutParams as RecyclerView.LayoutParams
+                        val top = child.bottom + params.bottomMargin
+                        val bottom = top + it.intrinsicHeight
+                        it.setBounds(parent.paddingLeft, top, parent.width - parent.paddingRight, bottom)
+                        it.draw(c)
+                    }
+                }
+            }
+        })
 
          }
     // 【修复】将点击方法移至 onCreate 外部，作为 Activity 的成员方法
@@ -130,3 +158,5 @@ class OneInfoActivity : AppCompatActivity() {
         dialog.show()
     }
         }
+
+

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.io.File
 import java.io.FileOutputStream
-class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDatabase2.db", null, 2) { // 提升数据库版本号
+class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDatabase3.db", null, 2) { // 提升数据库版本号
 
     companion object {
         const val TABLE_NAME = "users2"
@@ -125,7 +125,7 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 //                }
 //            }
 //        }
-        val dbFile = context.getDatabasePath("MyDatabase2.db")
+        val dbFile = context.getDatabasePath("MyDatabase3.db")
         if (!dbFile.parentFile.exists()) {
             dbFile.parentFile.mkdirs() // 确保父目录存在
         }

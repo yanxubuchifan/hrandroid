@@ -456,53 +456,53 @@
                             android:textSize="16sp" />
                     </LinearLayout>
                     <!--                    拟提职务-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingVertical="12dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingVertical="12dp">-->
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="拟提职务"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="拟提职务"-->
+<!--                            android:textColor="@color/text_hint"-->
+<!--                            android:textSize="16sp" />-->
 
-                        <TextView
-                            android:id="@+id/proposed_position_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="end"
-                            android:textColor="@color/text_content"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                    <!--                    拟免职务-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingVertical="12dp">
+<!--                        <TextView-->
+<!--                            android:id="@+id/proposed_position_text_view"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="2"-->
+<!--                            android:gravity="end"-->
+<!--                            android:textColor="@color/text_content"-->
+<!--                            android:textSize="16sp" />-->
+<!--                    </LinearLayout>-->
+<!--                    &lt;!&ndash;                    拟免职务&ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingVertical="12dp">-->
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="拟免职务"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="拟免职务"-->
+<!--                            android:textColor="@color/text_hint"-->
+<!--                            android:textSize="16sp" />-->
 
-                        <TextView
-                            android:id="@+id/proposed_removal_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="end"
-                            android:textColor="@color/text_content"
-                            android:textSize="16sp" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:id="@+id/proposed_removal_text_view"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="2"-->
+<!--                            android:gravity="end"-->
+<!--                            android:textColor="@color/text_content"-->
+<!--                            android:textSize="16sp" />-->
+<!--                    </LinearLayout>-->
 
                     <!-- 其他信息项类似结构 -->
                     <!-- ... 此处省略其他信息项 ... -->
@@ -643,25 +643,63 @@
                             android:textSize="16sp" />
                     </LinearLayout>
                     <!-- 家庭信息 -->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:paddingVertical="12dp">-->
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="家庭信息"-->
+<!--                            android:textColor="@color/text_hint"-->
+<!--                            android:textSize="16sp" />-->
+<!--                        <TextView-->
+<!--                            android:id="@+id/family_text_view"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="4dp"-->
+<!--                            android:textColor="@color/text_content"-->
+<!--                            android:textSize="16sp" />-->
+<!--                    </LinearLayout>-->
+                    <!-- 家庭信息 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingVertical="12dp">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="家庭信息"
                             android:textColor="@color/text_hint"
                             android:textSize="16sp" />
-                        <TextView
-                            android:id="@+id/family_text_view"
+
+                        <!-- 横向滚动容器 -->
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:textColor="@color/text_content"
-                            android:textSize="16sp" />
+                            android:scrollbars="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <!-- 表头 -->
+                                <include layout="@layout/family_table_header"/>
+
+                                <!-- 数据列表 -->
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/family_recycler_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+                        </HorizontalScrollView>
                     </LinearLayout>
+
 
 
 

@@ -79,10 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun cleandatabase() {
         println("清空数据库")
     val db = databaseHelper.writableDatabase
-
-
-//    db.delete(TABLE_NAME,null,null)
-//    db.execSQL("DROP TABLE IF EXISTS ${DatabaseHelper.TABLE_NAME}")
+    db.delete(TABLE_NAME,null,null)
 
     }
 
