@@ -114,15 +114,7 @@ class OneInfoActivity : AppCompatActivity() {
         // 提免理由
         findViewById<TextView>(R.id.reasons_text_view).text = personInfo.oneinfo_reasons
 
-        // 展示家庭信息
-        val familyText = personInfo.oneinfo_family.joinToString("\n") {
-            "关系: ${it.oneinfo_family_mamber_relationship}, 姓名: ${it.oneinfo_family_mamber_name}, 生日: ${it.oneinfo_family_mamber_birthday}, 政治面貌: ${it.oneinfo_family_mamber_political}, 职务: ${it.oneinfo_family_mamber_position}"
-        }
-        // 展示家庭信息
-//        findViewById<TextView>(R.id.family_text_view).text = familyText
 
-
-        // 替换原有的家庭信息展示代码
         val familyRecyclerView: RecyclerView = findViewById(R.id.family_recycler_view)
 // 使用垂直布局管理器，让每个条目纵向排列
         familyRecyclerView.layoutManager = LinearLayoutManager(this)

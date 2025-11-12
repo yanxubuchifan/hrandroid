@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("开始应用")
+
         super.onCreate(savedInstanceState)
         // 启用边缘沉浸式布局
         enableEdgeToEdge()
@@ -51,16 +47,10 @@ class MainActivity : AppCompatActivity() {
             findViewById<View>(R.id.nav_host_fragment_activity_main).setPadding(0, systemBars.top, 0, 0)
             insets
         }
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("调用数据库")
+
 
         databaseHelper = DatabaseHelper(this)
-        println("***********************************aa")
         databaseHelper.getReadableDatabase()
-        println("***********************************bb")
         val db = databaseHelper.writableDatabase // 获取可写数据库，确保 onCreate 方法被调用
         cleandatabase()
         readJsonFile()
@@ -77,7 +67,6 @@ class MainActivity : AppCompatActivity() {
     }
 //清空数据库
     private fun cleandatabase() {
-        println("清空数据库")
     val db = databaseHelper.writableDatabase
     db.delete(TABLE_NAME,null,null)
 
@@ -101,21 +90,14 @@ class MainActivity : AppCompatActivity() {
                 println(oneinfo)
                 insertData(oneinfo)
             }
-            println("插入完整数据")
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: JSONException) {
-            println("解析 JSON 数据时出错: ${e.message}")
             e.printStackTrace()
         }
     }
 
     private fun insertData(jsonObject: org.json.JSONObject) {
-        println("***********************************1")
-        println("***********************************2")
-        println("***********************************3")
-        println("***********************************4")
-        println("插入数据")
         val db = databaseHelper.writableDatabase
         val values = ContentValues()
         try {

@@ -7,10 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import java.text.SimpleDateFormat
-import java.text.ParseException // Add this import for ParseException
-import java.util.Calendar
-import java.util.Locale
 // 修改构造函数，仅保留personInfoList参数
 class NameAdapter(private val personInfoList: List<PersonInfo>) :
     RecyclerView.Adapter<NameAdapter.NameViewHolder>() {

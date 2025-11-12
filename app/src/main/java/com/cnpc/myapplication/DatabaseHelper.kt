@@ -40,11 +40,6 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     override fun onCreate(db: SQLiteDatabase) {
         // 添加日志语句
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("新建数据库")
         android.util.Log.d("DatabaseHelper", "onCreate method called, creating table $TABLE_NAME")
         db.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_NAME TEXT, $COLUMN_SEX TEXT, $COLUMN_BIRTHDAY TEXT, $COLUMN_AGE TEXT, $COLUMN_HEADPIC TEXT, " +
@@ -59,11 +54,6 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // 添加日志语句
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("升级数据库")
         android.util.Log.d("DatabaseHelper", "onUpgrade method called, dropping and recreating table $TABLE_NAME")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
@@ -71,11 +61,6 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     // 模糊查询用户信息的方法
     fun queryUserInfoByLike(name: String): Cursor? {
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("模糊查询用户信息的方法")
         val db = readableDatabase
         val selection = "$COLUMN_NAME LIKE?"
         val selectionArgs = arrayOf("%$name%")
@@ -84,11 +69,6 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     // 按性别统计人数
     fun countBySex(): Map<String, Int> {
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("***********************************")
-        println("按性别统计人数")
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT $COLUMN_SEX, COUNT(*) FROM $TABLE_NAME GROUP BY $COLUMN_SEX", null)
         val result = mutableMapOf<String, Int>()
@@ -117,56 +97,10 @@ class DatabaseHelper(val context: Context) : SQLiteOpenHelper(context, "MyDataba
 
     private fun copyDatabaseIfNotExists() {
         // 现在可以正常访问 context（已声明为成员属性）
-//        val dbPath = context.getDatabasePath("MyDatabase.db").path
-//        if (!File(dbPath).exists()) {
-//            context.assets.open("MyDatabase.db").use { input ->
-//                FileOutputStream(dbPath).use { output ->
-//                    input.copyTo(output)
-//                }
-//            }
-//        }
         val dbFile = context.getDatabasePath("MyDatabase3.db")
         if (!dbFile.parentFile.exists()) {
             dbFile.parentFile.mkdirs() // 确保父目录存在
         }
     }
-    // 按5岁一个阶段统计年龄分布（如：0-4岁、5-9岁...70岁以上）
-    fun countByAgeGroup(): Map<String, Int> {
-        // 定义5岁间隔的年龄分组（覆盖0-70+岁）
-        val ageGroups = listOf(
-            "0-4岁", "5-9岁", "10-14岁", "15-19岁",
-            "20-24岁", "25-29岁", "30-34岁", "35-39岁",
-            "40-44岁", "45-49岁", "50-54岁", "55-59岁",
-            "60-64岁", "65-69岁", "70岁以上"
-        )
-        val ageGroupMap = ageGroups.associateWith { 0 }.toMutableMap()
 
-        val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, arrayOf(COLUMN_BIRTHDAY), null, null, null, null, null)
-
-        if (cursor.moveToFirst()) {
-            do {
-                val birthday = cursor.getString(0)
-                val age = calculateAge(birthday)
-
-                // 根据年龄确定5岁分组
-                val group = when {
-                    age >= 70 -> "70岁以上"
-                    age < 0 -> "0-4岁"
-                    else -> {
-                        val lower = (age / 5) * 5
-                        val upper = lower + 4
-                        "${lower}-${upper}岁"
-                    }
-                }
-
-                // 【修复】累加对应分组的人数（之前缺失的核心统计逻辑）
-                ageGroupMap[group] = ageGroupMap[group]?.plus(1) ?: 1
-
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-
-        return ageGroupMap.filterValues { it > 0 }
-    }
 }
