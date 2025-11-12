@@ -1,20 +1,20 @@
 package com.cnpc.myapplication.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.cnpc.myapplication.databinding.FragmentHomeBinding
 import com.cnpc.myapplication.DatabaseHelper
 import com.cnpc.myapplication.InfoListActivity
-import com.cnpc.myapplication.OneInfoActivity
 import com.cnpc.myapplication.PersonInfo
+import com.cnpc.myapplication.SearchHistoryAdapter
 import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONException
@@ -22,50 +22,113 @@ import org.json.JSONException
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var databaseHelper: DatabaseHelper // 添加 DatabaseHelper 实例
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var historyAdapter: SearchHistoryAdapter
+    private val historyList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-//        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        // 初始化 databaseHelper
         databaseHelper = DatabaseHelper(requireContext())
 
-        // 获取全局变量的值
-//        新建一个按钮
-        val button11: Button = binding.button2
-//        新建一个输入框
-        val input1: EditText = binding.editTextText
-//        按钮点击事件
-        button11.setOnClickListener { view ->
-            println("第一次git1")
-//            获取输入框内容
-            println(input1.text)
-            val allinfo = queryDatabaseByLike(input1.text.toString())
-            println(allinfo.size)
-            if (allinfo.size!=0){
-                val gson = Gson()
-                val json = gson.toJson(allinfo)
-                val intent = Intent(requireContext(), InfoListActivity::class.java)
-                intent.putExtra("infolist", json)
-                startActivity(intent)
-            }else{
-
+        // HomeFragment 中初始化 Adapter 的地方修改为：
+        historyAdapter = SearchHistoryAdapter(historyList,
+            onItemClick = { keyword ->
+                binding.editTextText.setText(keyword)
+                performSearch(keyword)
+            },
+            onDeleteClick = { keyword ->
+                // 从列表和 SharedPreferences 中删除
+                historyList.remove(keyword)
+                val prefs = requireContext().getSharedPreferences("search_history", Context.MODE_PRIVATE)
+                prefs.edit().putString("history", historyList.joinToString(",")).apply()
             }
+        )
+        binding.rvHistory.adapter = historyAdapter
 
+        // 加载搜索历史
+        loadSearchHistory()
+
+        // 搜索框文本变化监听
+        binding.editTextText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                binding.ivClear.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        // 清除文本按钮
+        binding.ivClear.setOnClickListener {
+            binding.editTextText.setText("")
         }
 
+        // 搜索按钮点击
+        binding.button2.setOnClickListener {
+            val keyword = binding.editTextText.text.toString()
+            if (keyword.isNotEmpty()) {
+                saveSearchHistory(keyword)
+                performSearch(keyword)
+            }
+        }
 
+        // 清除历史按钮
+        binding.tvClearHistory.setOnClickListener {
+            clearSearchHistory()
+        }
 
         return root
+    }
+    // 执行搜索
+    private fun performSearch(keyword: String) {
+        val allinfo = queryDatabaseByLike(keyword)
+        if (allinfo.isNotEmpty()) {
+            val gson = Gson()
+            val json = gson.toJson(allinfo)
+            val intent = Intent(requireContext(), InfoListActivity::class.java)
+            intent.putExtra("infolist", json)
+            startActivity(intent)
+        } else {
+            Toast.makeText(context, "未找到相关信息", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // 搜索历史相关方法
+    private fun loadSearchHistory() {
+        // 实际项目中应使用SharedPreferences或数据库存储
+        val prefs = requireContext().getSharedPreferences("search_history", Context.MODE_PRIVATE)
+        val historyStr = prefs.getString("history", "")
+        historyList.clear()
+        historyStr?.split(",")?.filter { it.isNotEmpty() }?.let {
+            historyList.addAll(it)
+        }
+        historyAdapter.notifyDataSetChanged()
+    }
+
+    private fun saveSearchHistory(keyword: String) {
+        if (historyList.contains(keyword)) {
+            historyList.remove(keyword)
+        }
+        historyList.add(0, keyword)
+        // 限制历史记录数量
+        if (historyList.size > 10) {
+            historyList.removeLast()
+        }
+        val prefs = requireContext().getSharedPreferences("search_history", Context.MODE_PRIVATE)
+        prefs.edit().putString("history", historyList.joinToString(",")).apply()
+        historyAdapter.notifyDataSetChanged()
+    }
+
+    private fun clearSearchHistory() {
+        historyList.clear()
+        requireContext().getSharedPreferences("search_history", Context.MODE_PRIVATE)
+            .edit().clear().apply()
+        historyAdapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

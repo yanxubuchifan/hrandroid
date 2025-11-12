@@ -22,4 +22,5 @@
     <color name="table_header">#4285F4</color>
     <color name="table_row_even">#F5F7FA</color>
     <color name="table_row_odd">#FFFFFF</color>
+    <color name="gray_light">#F5F5F5</color>
 </resources>
