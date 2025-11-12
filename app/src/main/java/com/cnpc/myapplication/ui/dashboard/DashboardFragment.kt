@@ -32,9 +32,41 @@ class DashboardFragment : Fragment() {
         // 从数据库获取并展示性别分布
         initGenderChart()
         // 从数据库获取并展示年龄分布
-//        initAgeChart()
+        initAgeChart()
 
         return root
+    }
+    // 初始化年龄分布饼图
+    private fun initAgeChart() {
+        val ageGroupCountMap = databaseHelper.countByAgeGroup() // 从数据库统计年龄组数据
+        val total = ageGroupCountMap.values.sum()
+
+        if (total == 0) {
+            binding.ageChart.description.text = "暂无年龄数据"
+            return
+        }
+
+        val entries = ageGroupCountMap.map { (ageGroup, count) ->
+            // 显示百分比和具体人数
+            PieEntry((count.toFloat() / total) * 100, "$ageGroup (${count}人)")
+        }.toMutableList()
+
+        val dataSet = PieDataSet(entries, "年龄分布")
+        // 使用更多样化的颜色
+        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList() +
+                ColorTemplate.COLORFUL_COLORS.toList()
+
+        val data = PieData(dataSet)
+        data.setValueTextSize(12f)  // 设置数值字体大小
+
+        binding.ageChart.apply {
+            this.data = data
+            description.text = "年龄结构统计"
+            isDrawHoleEnabled = true
+            holeRadius = 40f
+            setCenterText("年龄占比")
+            invalidate() // 刷新图表
+        }
     }
 
     // 初始化性别分布饼图
