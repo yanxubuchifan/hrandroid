@@ -70,33 +70,6 @@ class DashboardFragment : Fragment() {
     }
 
 
-    // 初始化年龄分布饼图
-//    private fun initAgeChart() {
-//        val ageGroupCountMap = databaseHelper.countByAgeGroup() // 从users表统计年龄组数据
-//        val total = ageGroupCountMap.values.sum()
-//
-//        if (total == 0) {
-//            binding.ageChart.description.text = "暂无年龄数据"
-//            return
-//        }
-//
-//        val entries = ageGroupCountMap.map { (ageGroup, count) ->
-//            PieEntry((count.toFloat() / total) * 100, ageGroup)
-//        }.toMutableList()
-//
-//        val dataSet = PieDataSet(entries, "年龄分布")
-//        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
-//
-//        binding.ageChart.apply {
-//            data = PieData(dataSet)
-//            description.text = "年龄结构统计"
-//            isDrawHoleEnabled = true
-//            holeRadius = 40f
-//            setCenterText("年龄占比")
-//            invalidate()
-//        }
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
